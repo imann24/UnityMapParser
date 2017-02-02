@@ -6,12 +6,13 @@
 
 using System.IO;
 using UnityEngine;
+using k = Global;
 
 public abstract class Parser 
 {
-    const string JSON_DIR = "JSON";
-    const string CSV_DIR = "CSV";
-    const string PREFABS_DIR = "Prefabs";
+    const string JSON_DIR = k.JSON_DIR;
+    const string CSV_DIR = k.CSV_DIR;
+    const string PREFABS_DIR = k.PREFABS_DIR;
 
     protected const char DEFAULT_JOIN_CHAR = '+';
 

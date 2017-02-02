@@ -1,0 +1,30 @@
+{
+  "Tiles" : [
+    {
+      "key" : "D",
+      "englishName" : "Dirt",
+      "isSolid" : true
+    },
+    {
+      "key" : "W",
+      "englishName" : "Water",
+      "isSolid" : false
+    }
+  ],
+  "Units" : [
+    {
+      "key" : "PL",
+      "englishName" : "Player",
+      "isPlayer" : true,
+      "isHostile" : false,
+      "speed" : 1
+    },
+    {
+      "key" : "SH",
+      "englishName" : "Shade",
+      "isPlayer" : false,
+      "isHostile" : true,
+      "speed" : 0.5
+    }
+  ]
+}
