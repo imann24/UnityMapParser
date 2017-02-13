@@ -3,5 +3,6 @@
      "delegateKey" : ":",
      "delegateSeparator" : ":",
      "characterMoveSpeed" : 25,
-     "characterJumpSpeed" : 250
+     "characterJumpSpeed" : 750,
+     "playerGravityScale" : 2.5
 }

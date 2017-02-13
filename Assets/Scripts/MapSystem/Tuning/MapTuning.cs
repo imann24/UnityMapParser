@@ -50,6 +50,14 @@ public class MapTuning : Tuning<MapTuning>
         }
     }
         
+    public float PlayerGravityScale
+    {
+        get
+        {
+            return playerGravityScale;
+        }
+    }
+        
     #endregion
 
     protected override string fileName 
@@ -70,5 +78,7 @@ public class MapTuning : Tuning<MapTuning>
     float characterMoveSpeed;
     [SerializeField]
     float characterJumpSpeed;
+    [SerializeField]
+    float playerGravityScale;
 
 }

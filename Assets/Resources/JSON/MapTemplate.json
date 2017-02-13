@@ -37,7 +37,7 @@
       "delegates" : [
         "id"
       ],
-      "isSolid" : true
+      "isSolid" : false
     }
   ]
 }

@@ -14,7 +14,7 @@ public class ParsingTest : MonoBehaviour
 	void Start() 
 	{
         CSVParser csv = new CSVParser();
-        string[,] mapAsCSV = csv.ParseCSVFromResources("DemoMap");
+        string[,] mapAsCSV = csv.ParseCSVFromResources("ComplexDemoMap");
         MapParser parser = new MapParser();
         parser.CreateWorld(mapAsCSV, transform);
 	}

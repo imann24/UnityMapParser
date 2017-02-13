@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     {
         get
         {
-            return rigibody.IsTouchingLayers();
+            return rigibody.IsTouchingLayers() && rigibody.velocity.y <= 0;
         }
     }
 
@@ -52,6 +52,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         tuning = MapTuning.Get;
+        rigibody.gravityScale = tuning.PlayerGravityScale;
+        rigibody.drag = tuning.PlayerGravityScale;
         m_camera = CameraController.Get;
         if(m_camera.RequestFocus(transform))
         {
@@ -68,7 +70,7 @@ public class PlayerController : MonoBehaviour
     {
         float vertMove = Input.GetAxis(VERT);
         if(canJump && vertMove > 0)
-        {;
+        {
             vertMove = jump;
         }
         else
