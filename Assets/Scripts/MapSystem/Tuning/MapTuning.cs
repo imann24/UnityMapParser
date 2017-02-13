@@ -25,6 +25,30 @@ public class MapTuning : Tuning<MapTuning>
             return delegateKey;
         }
     }
+
+    public string DelegateSeparator
+    {
+        get
+        {
+            return delegateSeparator;
+        }
+    }
+
+    public float CharacterMoveSpeed
+    {
+        get
+        {
+            return characterMoveSpeed;
+        }
+    }
+
+    public float CharacterJumpSpeed
+    {
+        get
+        {
+            return characterJumpSpeed;
+        }
+    }
         
     #endregion
 
@@ -40,5 +64,11 @@ public class MapTuning : Tuning<MapTuning>
     string joinKey;
     [SerializeField]
     string delegateKey;
+    [SerializeField]
+    string delegateSeparator;
+    [SerializeField]
+    float characterMoveSpeed;
+    [SerializeField]
+    float characterJumpSpeed;
 
 }

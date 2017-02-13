@@ -1,0 +1,43 @@
+{
+  "tiles" : [
+    {
+      "key" : "D",
+      "name" : "Dirt",
+      "isSolid" : true
+    },
+    {
+      "key" : "W",
+      "name" : "Water",
+      "isSolid" : false
+    }
+  ],
+  "units" : [
+    {
+      "key" : "PL",
+      "name" : "Player",
+      "isPlayer" : true,
+      "isHostile" : false,
+      "speed" : 1,
+      "isSolid" : true
+    },
+    {
+      "key" : "SH",
+      "name" : "Shade",
+      "isPlayer" : false,
+      "isHostile" : true,
+      "speed" : 0.5,
+      "isSolid" : false
+    }
+  ],
+  "items" : [
+    {
+      "key" : "LR",
+      "name" : "Letter",
+      "collectible" : true,
+      "delegates" : [
+        "id"
+      ],
+      "isSolid" : true
+    }
+  ]
+}

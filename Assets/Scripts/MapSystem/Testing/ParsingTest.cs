@@ -13,9 +13,10 @@ public class ParsingTest : MonoBehaviour
 	// Use this for initialization
 	void Start() 
 	{
-        MapTuning tuning = MapTuning.Get;
-        Debug.Log(tuning.DelegateKey);
-        Debug.Log(tuning.JoinKey);
+        CSVParser csv = new CSVParser();
+        string[,] mapAsCSV = csv.ParseCSVFromResources("DemoMap");
+        MapParser parser = new MapParser();
+        parser.CreateWorld(mapAsCSV, transform);
 	}
 
 }

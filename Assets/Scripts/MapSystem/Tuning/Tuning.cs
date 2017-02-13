@@ -17,6 +17,7 @@ public abstract class Tuning<T> where T : Tuning<T>, new()
             if(!hasInstance)
             {
                 _instance = loadFromFilePath();
+                _instance.init();
             }
             return _instance;
         }
@@ -44,6 +45,11 @@ public abstract class Tuning<T> where T : Tuning<T>, new()
         JSONParser parser = new JSONParser();
         T instance = new T();
         return parser.ParseJSONOverwriteFromResources<T>(instance.fileName, instance);
+    }
+
+    protected virtual void init()
+    {
+        // NOTHING
     }
 
 }

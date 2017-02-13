@@ -18,19 +18,10 @@ public class MapItem : MapData
             return collectible;
         }
     }
-    public string[] Delegates
-    {
-        get
-        {
-            return delegates;
-        }
-    }
 
     #endregion
 
     [SerializeField]
     bool collectible;
-    [SerializeField]
-    string[] delegates;
 
 }

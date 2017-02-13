@@ -14,7 +14,9 @@ public abstract class Parser
     const string CSV_DIR = k.CSV_DIR;
     const string PREFABS_DIR = k.PREFABS_DIR;
 
-    protected const char DEFAULT_JOIN_CHAR = '+';
+    protected const string DEFAULT_JOIN_KEY = "+";
+    protected const string DEFAULT_DELEGATE_KEY =":";
+    protected const string DEFAULT_DELEGATE_SEPARATOR_KEY =",";
 
     protected TextAsset GetTextAssetInResources (string path) {
         return Resources.Load<TextAsset>(path);

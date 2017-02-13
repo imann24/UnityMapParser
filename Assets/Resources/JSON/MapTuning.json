@@ -1,4 +1,7 @@
 {
      "joinKey" : "+",
-     "delegateKey" : ":"
+     "delegateKey" : ":",
+     "delegateSeparator" : ":",
+     "characterMoveSpeed" : 25,
+     "characterJumpSpeed" : 250
 }
