@@ -10,13 +10,21 @@ using UnityEngine;
 
 public class ParsingTest : MonoBehaviour 
 {
+    [SerializeField]
+    Sprite backgroundSprite;
+
+    [SerializeField]
+    CameraController activeCamera;
+
 	// Use this for initialization
 	void Start() 
 	{
         CSVParser csv = new CSVParser();
-        string[,] mapAsCSV = csv.ParseCSVFromResources("ComplexDemoMap");
+        string mapName = "ComplexDemoMap";
+        string[,] mapAsCSV = csv.ParseCSVFromResources(mapName);
         MapParser parser = new MapParser();
-        parser.CreateWorld(mapAsCSV, transform);
+        parser.CreateWorld(mapName, mapAsCSV, transform);
+        activeCamera.SetBackground(backgroundSprite);
 	}
 
 }

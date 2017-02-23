@@ -18,19 +18,24 @@ public abstract class Parser
     protected const string DEFAULT_DELEGATE_KEY =":";
     protected const string DEFAULT_DELEGATE_SEPARATOR_KEY =",";
 
-    protected TextAsset GetTextAssetInResources (string path) {
+    protected TextAsset GetTextAssetInResources(string path) 
+    {
         return Resources.Load<TextAsset>(path);
     }
 
-    protected string JSONPath (string fileName) {
+    protected string JSONPath(string fileName) 
+    {
         return Path.Combine(JSON_DIR, fileName);
     }
 
-    protected string CSVPath (string fileName) {
+    protected string CSVPath(string fileName)
+    {
         return Path.Combine(CSV_DIR, fileName);
     }
         
-    protected string PrefabsPath (string fileName) {
+    protected string PrefabsPath(string fileName) 
+    {
         return Path.Combine(PREFABS_DIR, fileName);
     }
+        
 }

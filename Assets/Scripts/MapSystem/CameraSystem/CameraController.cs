@@ -40,14 +40,35 @@ public class CameraController : MonoBehaviour
         private set;
     }
 
+    public bool HasBackground
+    {
+        get
+        {
+            return backgroundImage != null;
+        }
+    }
+
     #endregion
 
-    public Transform currentFocus;
+    Vector3 cameraWindow
+    {
+        get
+        {
+            float size = activeCamera.orthographicSize * 2f;
+            return new Vector3(size, size);
+        }
+    }
+
+    [SerializeField]
+    Transform currentFocus;
+    SpriteRenderer backgroundImage;
+    Camera activeCamera;
 
 	// Use this for initialization
 	void Awake() 
 	{
         _mostRecentInstance = this;
+        activeCamera = GetComponent<Camera>();
 	}
 
     void Update()
@@ -97,4 +118,23 @@ public class CameraController : MonoBehaviour
             FocusLocked = false;
         }
     }
+
+    public void SetBackground(Sprite sprite)
+    {
+        if(!backgroundImage)
+        {
+            backgroundImage = createBackground();
+        }
+        backgroundImage.sprite = sprite;
+    }
+
+    SpriteRenderer createBackground()
+    {
+        GameObject backgroundObj = new GameObject();
+        Transform backgroundTrans = backgroundObj.transform;
+        backgroundTrans.SetParent(transform);
+        backgroundTrans.localScale = cameraWindow;
+        return backgroundObj.AddComponent<SpriteRenderer>();
+    }
+
 }

@@ -18,6 +18,16 @@ public class MapParser : Parser
 
     Dictionary<string, GameObject> bufferedPrefabs = new Dictionary<string, GameObject>();
 
+    protected MapTuning tuning
+    {
+        get
+        {
+            return MapTuning.Get;   
+        }
+    }
+
+    #region Constructors 
+
     public MapParser()
     {
         MapTuning tuning = MapTuning.Get;
@@ -26,9 +36,12 @@ public class MapParser : Parser
         template = MapTemplate.Get;
     }
 
-    public void CreateWorld(string[,] worldKeys, Transform parent)
+    #endregion
+
+    public void CreateWorld(string mapName, string[,] worldKeys, Transform parent)
     {
-        GameObject[,][] worldTemplate = ParseWorld(worldKeys);
+        MapDescriptor descriptor = parseWorld(mapName, worldKeys);
+        GameObject[,][] worldTemplate = descriptor.Map;
         for(int x = 0; x < worldTemplate.GetLength(0); x++) 
         {
             for(int y = 0; y < worldTemplate.GetLength(1); y++)
@@ -44,7 +57,7 @@ public class MapParser : Parser
         }
     }
 
-    public GameObject[,][] ParseWorld(string[,] worldKeys) 
+    MapDescriptor parseWorld(string mapName, string[,] worldKeys) 
     {
         int width = worldKeys.GetLength(0);
         int height = worldKeys.GetLength(1);
@@ -65,7 +78,10 @@ public class MapParser : Parser
                 }
             }
         }
-        return world;
+        MapDescriptor descriptor = new MapDescriptor(world);
+        JSONParser metaDataParser = new JSONParser();
+        metaDataParser.ParseJSONOverwriteFromResources(getMetaFileName(mapName), descriptor);
+        return descriptor;
     }
 
     GameObject[] ParseObjectsAtPosition(string[] keys, int x, int y) 
@@ -116,6 +132,11 @@ public class MapParser : Parser
             bufferedPrefabs.Add(key, obj);
             return obj;
         }
+    }
+
+    string getMetaFileName(string mapName)
+    {
+        return string.Format("{0}{1}", mapName, tuning.MetaSuffix);
     }
 
 }

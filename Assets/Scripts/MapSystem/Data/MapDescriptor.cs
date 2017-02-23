@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class MapDescriptor 
 {
+    #region Instance Acccessors 
+
     public string BackgroundSprite
     {
         get
@@ -16,23 +18,33 @@ public class MapDescriptor
         }
     }
 
-    public MapData[,][] Map 
+    public GameObject[,][] Map 
     {
         get 
         {
             return _map;
         }
-        set
+        private set
         {
             _map = value;
         }
         
     }
 
+    #endregion
 
     [SerializeField]
     string backgroundSprite;
    
-    MapData[,][] _map;
+    GameObject[,][] _map;
+
+    #region Constructors 
+
+    public MapDescriptor(GameObject[,][] map)
+    {
+        this.Map = map;
+    }
+        
+    #endregion
 
 }

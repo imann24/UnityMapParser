@@ -218,6 +218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba91911bffa9e44eeb2e942810d80017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backgroundSprite: {fileID: 21300000, guid: a99092cbee6f542ec80630345916fc3e, type: 3}
+  activeCamera: {fileID: 1879669053}
 --- !u!4 &1967585295
 Transform:
   m_ObjectHideFlags: 0

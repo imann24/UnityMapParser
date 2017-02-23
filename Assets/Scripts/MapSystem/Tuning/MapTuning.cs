@@ -49,7 +49,7 @@ public class MapTuning : Tuning<MapTuning>
             return characterJumpSpeed;
         }
     }
-        
+
     public float PlayerGravityScale
     {
         get
@@ -57,8 +57,42 @@ public class MapTuning : Tuning<MapTuning>
             return playerGravityScale;
         }
     }
+
+    public string IdDelegate
+    {
+        get
+        {
+            return idDelegate;
+        }
+    }
+
+    public string DestinationDelegate
+    {
+        get
+        {
+            return destinationDelegate;
+        }
+    }
+
+    public string MetaSuffix
+    {
+        get
+        {
+            return metaSuffix;
+        }
+    }
+
+    public string FileJoinKey
+    {
+        get
+        {
+            return fileJoinKey;
+        }
+    }
         
     #endregion
+
+    #region Tuning<T> Overrides 
 
     protected override string fileName 
     {
@@ -67,6 +101,8 @@ public class MapTuning : Tuning<MapTuning>
             return MapGlobal.MAP_TUNING;
         }
     }
+
+    #endregion
 
     [SerializeField]
     string joinKey;
@@ -80,5 +116,13 @@ public class MapTuning : Tuning<MapTuning>
     float characterJumpSpeed;
     [SerializeField]
     float playerGravityScale;
+    [SerializeField]
+    string idDelegate;
+    [SerializeField]
+    string destinationDelegate;
+    [SerializeField]
+    string metaSuffix;
+    [SerializeField]
+    string fileJoinKey;
 
 }
