@@ -6,6 +6,7 @@
 
 using UnityEngine;
 
+[System.Serializable]
 public class MapDescriptor 
 {
     #region Instance Acccessors 
@@ -31,6 +32,12 @@ public class MapDescriptor
         
     }
 
+    public string MapName 
+    {
+        get;
+        private set;
+    }
+
     #endregion
 
     [SerializeField]
@@ -40,8 +47,9 @@ public class MapDescriptor
 
     #region Constructors 
 
-    public MapDescriptor(GameObject[,][] map)
+    public MapDescriptor(string mapName, GameObject[,][] map)
     {
+        this.MapName = mapName;
         this.Map = map;
     }
         

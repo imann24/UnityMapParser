@@ -38,26 +38,7 @@ public class MapParser : Parser
 
     #endregion
 
-    public void CreateWorld(string mapName, string[,] worldKeys, Transform parent)
-    {
-        MapDescriptor descriptor = parseWorld(mapName, worldKeys);
-        GameObject[,][] worldTemplate = descriptor.Map;
-        for(int x = 0; x < worldTemplate.GetLength(0); x++) 
-        {
-            for(int y = 0; y < worldTemplate.GetLength(1); y++)
-            {
-                foreach(GameObject mapObj in worldTemplate[x, y])
-                {
-                    MapObjectBehaviour behaviour = Object.Instantiate(mapObj, new Vector3(x, y), Quaternion.identity).GetComponent<MapObjectBehaviour>();
-                    behaviour.transform.SetParent(parent);
-                    behaviour.AssignDescriptor(mapObj.GetComponent<MapObjectBehaviour>().CopyDescriptor());
-                    behaviour.Initialize();
-                }
-            }
-        }
-    }
-
-    MapDescriptor parseWorld(string mapName, string[,] worldKeys) 
+    public MapDescriptor ParseWorld(string mapName, string[,] worldKeys) 
     {
         int width = worldKeys.GetLength(0);
         int height = worldKeys.GetLength(1);
@@ -78,7 +59,7 @@ public class MapParser : Parser
                 }
             }
         }
-        MapDescriptor descriptor = new MapDescriptor(world);
+        MapDescriptor descriptor = new MapDescriptor(mapName, world);
         JSONParser metaDataParser = new JSONParser();
         metaDataParser.ParseJSONOverwriteFromResources(getMetaFileName(mapName), descriptor);
         return descriptor;
