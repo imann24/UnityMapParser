@@ -37,10 +37,20 @@ public class PlayerController : MonoBehaviour
             return rigibody.IsTouchingLayers() && rigibody.velocity.y <= 0;
         }
     }
+        
+    bool isClimbing
+    {
+        get
+        {
+            return currentClimbingTarget;
+        }
+    }
 
     Rigidbody2D rigibody;
     CameraController m_camera;
     MapTuning tuning;
+
+    MapTileBehaviour currentClimbingTarget;
 
 	// Use this for initialization
 	void Awake() 
@@ -66,9 +76,86 @@ public class PlayerController : MonoBehaviour
         rigibody.AddForce(getMoveVector());
     }
 
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        MapTileBehaviour tile;
+        if(checkForTileCollideEvent(collider, out tile))
+        {
+            handleEnterCollideWithTile(tile);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collider)
+    {
+        MapTileBehaviour tile;
+        if(checkForTileCollideEvent(collider, out tile))
+        {
+            handleExitCollideWithTile(tile);
+        }
+    }
+
+    bool checkForTileCollideEvent(Collider2D collider, out MapTileBehaviour tile)
+    {
+        if(tile = GetComponent<MapTileBehaviour>())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    void handleEnterCollideWithTile(MapTileBehaviour tile)
+    {
+        if(tile.GetTile.IsClimbable)
+        {
+            handleEnterClimbableTile(tile);
+        }
+    }
+
+    void handleExitCollideWithTile(MapTileBehaviour tile)
+    {
+        if(tile.GetTile.IsClimbable)
+        {
+            handleExitClimbableTile(tile);
+        }
+    }
+
+    void handleEnterClimbableTile(MapTileBehaviour tile)
+    {
+        currentClimbingTarget = tile;
+    }
+
+    void handleExitClimbableTile(MapTileBehaviour tile)
+    {
+        if(currentClimbingTarget == tile)
+        {
+            currentClimbingTarget = null;
+        }
+    }
+
     Vector2 getMoveVector()
     {
         float vertMove = Input.GetAxis(VERT);
+        if(isClimbing)
+        {
+            vertMove = getClimbingVertVelocity(vertMove);
+        }
+        else
+        {
+            vertMove = getJumpingVertVelocity(vertMove);
+        }
+        return new Vector2(Input.GetAxis(HOR) * speed, vertMove);
+    }
+        
+    float getClimbingVertVelocity(float vertMove)
+    {
+        return vertMove;
+    }
+
+    float getJumpingVertVelocity(float vertMove)
+    {
         if(canJump && vertMove > 0)
         {
             vertMove = jump;
@@ -77,7 +164,7 @@ public class PlayerController : MonoBehaviour
         {
             vertMove = 0;
         }
-        return new Vector2(Input.GetAxis(HOR) * speed, vertMove);
+        return vertMove;
     }
 
 }

@@ -16,4 +16,17 @@ public class MapTileBehaviour : MapObjectBehaviour
         }
     }
 
+    #region MapObjectBehaviour Overrides 
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        if(GetTile.IsClimbable)
+        {
+            gameObject.AddComponent<BoxCollider2D>().isTrigger = true;
+        }
+    }
+
+    #endregion
+
 }
