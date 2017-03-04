@@ -84,6 +84,8 @@ public class MapParser : Parser
             {
                 key = keys[i];
             }
+            key = key.Replace("\"", "");
+            Debug.Log(key);
             objectsAtPosition[i] = GetPrefabFromKey(key);
             MapObjectBehaviour behaviour = objectsAtPosition[i].GetComponent<MapObjectBehaviour>();
             MapData descriptor;

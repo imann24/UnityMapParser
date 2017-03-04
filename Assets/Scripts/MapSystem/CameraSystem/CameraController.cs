@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour 
+public class CameraController : Controller 
 {
     #region Static Accessors
 
@@ -65,8 +65,9 @@ public class CameraController : MonoBehaviour
     Camera activeCamera;
 
 	// Use this for initialization
-	void Awake() 
-	{
+	protected override void Awake ()
+    {
+        base.Awake ();
         _mostRecentInstance = this;
         activeCamera = GetComponent<Camera>();
 	}

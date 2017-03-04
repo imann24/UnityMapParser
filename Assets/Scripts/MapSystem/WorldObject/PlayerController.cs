@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour 
+public class PlayerController : Controller 
 {
     const string HOR = "Horizontal";
     const string VERT = "Vertical";
@@ -47,14 +47,20 @@ public class PlayerController : MonoBehaviour
     }
 
     Rigidbody2D rigibody;
-    CameraController m_camera;
-    MapTuning tuning;
+    MapController map;
+    CameraController cam;
 
     MapTileBehaviour currentClimbingTarget;
 
+    public void Setup(MapController map)
+    {
+        this.map = map;
+    }
+
 	// Use this for initialization
-	void Awake() 
-	{
+	protected override void Awake()
+    {
+        base.Awake ();
         rigibody = GetComponent<Rigidbody2D>();	
         rigibody.freezeRotation = true;
 	}
@@ -64,10 +70,10 @@ public class PlayerController : MonoBehaviour
         tuning = MapTuning.Get;
         rigibody.gravityScale = tuning.PlayerGravityScale;
         rigibody.drag = tuning.PlayerGravityScale;
-        m_camera = CameraController.Get;
-        if(m_camera.RequestFocus(transform))
+        cam = CameraController.Get;
+        if(cam.RequestFocus(transform))
         {
-            m_camera.LockFocus(transform);
+            cam.LockFocus(transform);
         }
     }
 
@@ -78,25 +84,35 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        MapTileBehaviour tile;
-        if(checkForTileCollideEvent(collider, out tile))
+        MapObjectBehaviour obj;
+        if(checkForMapObjCollideEvent(collider, out obj))
         {
-            handleEnterCollideWithTile(tile);
+            if(checkForPortalCollideEvent(obj))
+            {
+                handlePortalCollider(obj);
+            }
+            if(obj is MapTileBehaviour)
+            {
+                handleEnterCollideWithTile(obj as MapTileBehaviour);
+            }
         }
     }
 
     void OnTriggerExit2D(Collider2D collider)
     {
-        MapTileBehaviour tile;
-        if(checkForTileCollideEvent(collider, out tile))
+        MapObjectBehaviour obj;
+        if(checkForMapObjCollideEvent(collider, out obj))
         {
-            handleExitCollideWithTile(tile);
+            if(obj is MapTileBehaviour)
+            {
+                handleExitCollideWithTile(obj as MapTileBehaviour);
+            }
         }
     }
 
-    bool checkForTileCollideEvent(Collider2D collider, out MapTileBehaviour tile)
+    bool checkForMapObjCollideEvent(Collider2D collider, out MapObjectBehaviour obj)
     {
-        if(tile = GetComponent<MapTileBehaviour>())
+        if(obj = GetComponent<MapTileBehaviour>())
         {
             return true;
         }
@@ -104,6 +120,11 @@ public class PlayerController : MonoBehaviour
         {
             return false;
         }
+    }
+
+    bool checkForPortalCollideEvent(MapObjectBehaviour obj)
+    {
+        return obj.Descriptor.IsPortal;
     }
 
     void handleEnterCollideWithTile(MapTileBehaviour tile)
@@ -133,6 +154,11 @@ public class PlayerController : MonoBehaviour
         {
             currentClimbingTarget = null;
         }
+    }
+        
+    void handlePortalCollider(MapObjectBehaviour obj)
+    {
+
     }
 
     Vector2 getMoveVector()

@@ -35,6 +35,5 @@ public abstract class MapObjectBehaviour : MonoBehaviour
             gameObject.AddComponent<BoxCollider2D>();
         }
     }
-
-
+        
 }

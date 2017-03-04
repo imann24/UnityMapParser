@@ -49,6 +49,14 @@ public abstract class MapData
         }
     }
 
+    public bool IsPortal
+    {
+        get
+        {
+            return isPortal;
+        }
+    }
+
     #endregion
 
     [SerializeField]
@@ -59,6 +67,8 @@ public abstract class MapData
     string[] delegates;
     [SerializeField]
     bool isSolid;
+    [SerializeField]
+    bool isPortal;
 
     Dictionary<string, object> delegateLookup;
 
@@ -69,6 +79,11 @@ public abstract class MapData
         {
             delegateLookup.Add(keys[i], vals[i]);
         }
+    }
+
+    public bool HasDelegate(string delegateId)
+    {
+        return DelegateValue(delegateId) != null;
     }
 
     public object DelegateValue(string delegateId)
@@ -82,6 +97,11 @@ public abstract class MapData
         {
             return null;
         }
+    }
+
+    public string DelegateStr(string deleateId)
+    {
+        return DelegateValue(deleateId).ToString();
     }
 
     // Adapted from http://stackoverflow.com/questions/1031023/copy-a-class-c-sharp
