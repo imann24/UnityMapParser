@@ -30,9 +30,13 @@ public abstract class MapObjectBehaviour : MonoBehaviour
         
     public virtual void Initialize()
     {
-        if(Descriptor.IsSolid)
+        if(Descriptor.IsSolid || Descriptor.IsPortal)
         {
-            gameObject.AddComponent<BoxCollider2D>();
+            BoxCollider2D collider = gameObject.AddComponent<BoxCollider2D>();
+            if(Descriptor.IsPortal)
+            {
+                collider.isTrigger = true;
+            }
         }
     }
         

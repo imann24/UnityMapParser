@@ -46,11 +46,15 @@ public class PlayerController : Controller
         }
     }
 
+    [SerializeField]
+    float gravityScale = 2;
+
     Rigidbody2D rigibody;
     MapController map;
     CameraController cam;
 
     MapTileBehaviour currentClimbingTarget;
+    MapUnitBehaviour player;
 
     public void Setup(MapController map)
     {
@@ -63,6 +67,7 @@ public class PlayerController : Controller
         base.Awake ();
         rigibody = GetComponent<Rigidbody2D>();	
         rigibody.freezeRotation = true;
+        player = GetComponent<MapUnitBehaviour>();
 	}
 
     void Start()
@@ -79,6 +84,7 @@ public class PlayerController : Controller
 
     void Update()
     {
+        rigibody.gravityScale = isClimbing ? 0 : gravityScale;
         rigibody.AddForce(getMoveVector());
     }
 
@@ -112,7 +118,7 @@ public class PlayerController : Controller
 
     bool checkForMapObjCollideEvent(Collider2D collider, out MapObjectBehaviour obj)
     {
-        if(obj = GetComponent<MapTileBehaviour>())
+        if(obj = collider.GetComponent<MapObjectBehaviour>())
         {
             return true;
         }
@@ -158,7 +164,7 @@ public class PlayerController : Controller
         
     void handlePortalCollider(MapObjectBehaviour obj)
     {
-
+        map.HandlePortalEnter(player, obj);
     }
 
     Vector2 getMoveVector()
@@ -177,7 +183,7 @@ public class PlayerController : Controller
         
     float getClimbingVertVelocity(float vertMove)
     {
-        return vertMove;
+        return vertMove * speed;
     }
 
     float getJumpingVertVelocity(float vertMove)

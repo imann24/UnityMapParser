@@ -15,7 +15,7 @@ public class PortalController : Controller
     // TODO: Solve the portal loop (two portals that are gatways to each other)
     public void HandlePortalEnter(MapObjectBehaviour target, MapObjectBehaviour portal)
     {
-        if(hasDestination(target))
+        if(hasDestination(portal))
         {
             MapObjectBehaviour destination = GetDestination(portal);
             Transform targetTrans = target.transform;
@@ -29,13 +29,16 @@ public class PortalController : Controller
     public void TrackPortal(MapObjectBehaviour mapObject)
     {
         string id = getDelegateStr(mapObject, tuning.IdDelegate);
-        if(activePortals.ContainsKey(id))
+        if(id != null)
         {
-            activePortals[id] = mapObject;
-        }
-        else
-        {
-            activePortals.Add(id, mapObject);
+            if(activePortals.ContainsKey(id))
+            {
+                activePortals[id] = mapObject;
+            }
+            else
+            {
+                activePortals.Add(id, mapObject);
+            }
         }
     }
 

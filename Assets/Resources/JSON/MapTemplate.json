@@ -3,7 +3,7 @@
     {
       "key" : "D",
       "name" : "Dirt",
-      "delegates " : [
+      "delegates" : [
       ],
       "isSolid" : true,
       "isClimbable" : false,
@@ -12,7 +12,7 @@
     {
       "key" : "W",
       "name" : "Water",
-      "delegates " : [
+      "delegates" : [
       ],
       "isSolid" : false,
       "isClimbable" : true,
@@ -21,7 +21,7 @@
     {
       "key" : "L",
       "name" : "Ladder",
-      "delegates " : [
+      "delegates" : [
       ],
       "isSolid" : false,
       "isClimbable" : true,
@@ -30,7 +30,8 @@
     {
       "key" : "GT",
       "name" : "Gateway",
-      "delegates " : [
+      "delegates" : [
+        "id",
         "destination"
       ],
       "isSolid" : false,
@@ -47,7 +48,8 @@
       ],
       "isPlayer" : true,
       "isHostile" : false,
-      "isSolid" : true
+      "isSolid" : true,
+      "isPortal" : false
     },
     {
       "key" : "SH",
@@ -57,7 +59,8 @@
       ],
       "isPlayer" : false,
       "isHostile" : true,
-      "isSolid" : false
+      "isSolid" : false,
+      "isPortal" : false
     }
   ],
   "items" : [

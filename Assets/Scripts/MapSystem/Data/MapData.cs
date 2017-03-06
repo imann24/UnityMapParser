@@ -37,7 +37,14 @@ public abstract class MapData
     {
         get
         {
-            return delegates;
+            if(delegates == null)
+            {
+                return new string[0];
+            }
+            else
+            {
+                return delegates;
+            }
         }
     }
         
@@ -75,7 +82,7 @@ public abstract class MapData
     public void SetDelegates(string[] keys, object[] vals)
     {
         delegateLookup = new Dictionary<string, object>();
-        for(int i = 0; i < keys.Length; i++)
+        for(int i = 0; i < keys.Length && i < vals.Length; i++)
         {
             delegateLookup.Add(keys[i], vals[i]);
         }
@@ -89,7 +96,7 @@ public abstract class MapData
     public object DelegateValue(string delegateId)
     {
         object val;
-        if(delegateLookup.TryGetValue(delegateId, out val))
+        if(delegateLookup != null && delegateLookup.TryGetValue(delegateId, out val))
         {
             return val;
         }
@@ -101,7 +108,14 @@ public abstract class MapData
 
     public string DelegateStr(string deleateId)
     {
-        return DelegateValue(deleateId).ToString();
+        try
+        {
+            return DelegateValue(deleateId).ToString();
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     // Adapted from http://stackoverflow.com/questions/1031023/copy-a-class-c-sharp
@@ -114,5 +128,5 @@ public abstract class MapData
             return formatter.Deserialize(memoryStream) as MapData;
         }
     }
-
+        
 }

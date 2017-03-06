@@ -18,6 +18,7 @@ public class MapLoader : Loader
                 foreach(GameObject mapObj in worldTemplate[x, y])
                 {
                     MapObjectBehaviour behaviour = Object.Instantiate(mapObj, new Vector3(x, y), Quaternion.identity).GetComponent<MapObjectBehaviour>();
+                    behaviour.gameObject.SetActive(true);
                     behaviour.transform.SetParent(parent);
                     behaviour.AssignDescriptor(mapObj.GetComponent<MapObjectBehaviour>().CopyDescriptor());
                     behaviour.Initialize();

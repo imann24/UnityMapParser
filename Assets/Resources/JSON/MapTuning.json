@@ -1,7 +1,7 @@
 {
      "joinKey" : "+",
      "delegateKey" : ":",
-     "delegateSeparator" : ":",
+     "delegateSeparator" : "|",
      "characterMoveSpeed" : 25,
      "characterJumpSpeed" : 750,
      "playerGravityScale" : 2,
