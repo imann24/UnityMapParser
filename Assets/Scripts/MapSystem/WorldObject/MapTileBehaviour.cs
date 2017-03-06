@@ -21,7 +21,8 @@ public class MapTileBehaviour : MapObjectBehaviour
     public override void Initialize()
     {
         base.Initialize();
-        if(GetTile.IsClimbable)
+        // Double check to prevent adding two box colliders to the same object
+        if(GetTile.IsClimbable && !gameObject.GetComponent<BoxCollider2D>())
         {
             gameObject.AddComponent<BoxCollider2D>().isTrigger = true;
         }

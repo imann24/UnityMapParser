@@ -15,8 +15,9 @@ public abstract class Parser
     const string PREFABS_DIR = k.PREFABS_DIR;
 
     protected const string DEFAULT_JOIN_KEY = "+";
-    protected const string DEFAULT_DELEGATE_KEY =":";
-    protected const string DEFAULT_DELEGATE_SEPARATOR_KEY =",";
+    protected const string DEFAULT_DELEGATE_KEY = ":";
+    protected const string DEFAULT_DELEGATE_SEPARATOR_KEY = "|";
+
 
     protected TextAsset GetTextAssetInResources(string path) 
     {
@@ -37,5 +38,19 @@ public abstract class Parser
     {
         return Path.Combine(PREFABS_DIR, fileName);
     }
-        
+     
+    protected string removeQuoteMarks(string source)
+    {
+        return source.Replace("\"", "");
+    }
+
+    protected string[] removeQuoteMarksArr(params string[] source)
+    {
+        for(int i = 0; i < source.Length; i++)
+        {
+            source[i] = removeQuoteMarks(source[i]);
+        }
+        return source;
+    }
+
 }

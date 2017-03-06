@@ -10,6 +10,7 @@ using UnityEngine;
 
 public class MapParser : Parser
 {
+    
     string joinKey = DEFAULT_JOIN_KEY;
     string delegateKey = DEFAULT_DELEGATE_KEY;
     string delegateSeparatorKey = DEFAULT_DELEGATE_SEPARATOR_KEY;
@@ -33,6 +34,7 @@ public class MapParser : Parser
         MapTuning tuning = MapTuning.Get;
         joinKey = tuning.JoinKey;
         delegateKey = tuning.DelegateKey;
+        delegateSeparatorKey = tuning.DelegateSeparator;
         template = MapTemplate.Get;
     }
 
@@ -55,7 +57,7 @@ public class MapParser : Parser
                 else
                 {
                     string[] keys = worldKeys[x, y].Split(joinKey.ToCharArray());
-                    world[x, y] = ParseObjectsAtPosition(keys, x, y);
+                    world[x, y] = parseObjectsAtPosition(keys, x, y);
                 }
             }
         }
@@ -65,7 +67,7 @@ public class MapParser : Parser
         return descriptor;
     }
 
-    GameObject[] ParseObjectsAtPosition(string[] keys, int x, int y) 
+    GameObject[] parseObjectsAtPosition(string[] keys, int x, int y) 
     {
         GameObject[] objectsAtPosition = new GameObject[keys.Length];
         for(int i = 0; i < objectsAtPosition.Length; i++) 
@@ -84,7 +86,7 @@ public class MapParser : Parser
             {
                 key = keys[i];
             }
-            objectsAtPosition[i] = GetPrefabFromKey(key);
+            objectsAtPosition[i] = getPrefabFromKey(key);
             MapObjectBehaviour behaviour = objectsAtPosition[i].GetComponent<MapObjectBehaviour>();
             MapData descriptor;
             if(behaviour && template.TryGetData(key, out descriptor))
@@ -100,19 +102,23 @@ public class MapParser : Parser
         return objectsAtPosition;
     }
 
-    GameObject GetPrefabFromKey(string key) 
+    GameObject getPrefabFromKey(string key) 
     {
         GameObject obj;
-        if(bufferedPrefabs.TryGetValue(key, out obj))
-        {
-            return obj;
-        }
-        else 
+        if(!bufferedPrefabs.TryGetValue(key, out obj))
         {
             obj = Resources.Load<GameObject>(PrefabsPath(key));
             bufferedPrefabs.Add(key, obj);
-            return obj;
         }
+        return invisibleClone(obj);
+    }
+
+    GameObject invisibleClone(GameObject obj)
+    {
+        GameObject invisible = Object.Instantiate(obj);
+        invisible.hideFlags = HideFlags.HideInHierarchy;
+        invisible.SetActive(false);
+        return invisible;
     }
 
     string getMetaFileName(string mapName)

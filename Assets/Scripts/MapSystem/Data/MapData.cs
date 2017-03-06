@@ -37,7 +37,14 @@ public abstract class MapData
     {
         get
         {
-            return delegates;
+            if(delegates == null)
+            {
+                return new string[0];
+            }
+            else
+            {
+                return delegates;
+            }
         }
     }
         
@@ -46,6 +53,14 @@ public abstract class MapData
         get
         {
             return isSolid;
+        }
+    }
+
+    public bool IsPortal
+    {
+        get
+        {
+            return isPortal;
         }
     }
 
@@ -59,26 +74,45 @@ public abstract class MapData
     string[] delegates;
     [SerializeField]
     bool isSolid;
+    [SerializeField]
+    bool isPortal;
 
     Dictionary<string, object> delegateLookup;
 
     public void SetDelegates(string[] keys, object[] vals)
     {
         delegateLookup = new Dictionary<string, object>();
-        for(int i = 0; i < keys.Length; i++)
+        for(int i = 0; i < keys.Length && i < vals.Length; i++)
         {
             delegateLookup.Add(keys[i], vals[i]);
         }
     }
 
+    public bool HasDelegate(string delegateId)
+    {
+        return DelegateValue(delegateId) != null;
+    }
+
     public object DelegateValue(string delegateId)
     {
         object val;
-        if(delegateLookup.TryGetValue(delegateId, out val))
+        if(delegateLookup != null && delegateLookup.TryGetValue(delegateId, out val))
         {
             return val;
         }
         else 
+        {
+            return null;
+        }
+    }
+
+    public string DelegateStr(string deleateId)
+    {
+        try
+        {
+            return DelegateValue(deleateId).ToString();
+        }
+        catch
         {
             return null;
         }
@@ -94,5 +128,5 @@ public abstract class MapData
             return formatter.Deserialize(memoryStream) as MapData;
         }
     }
-
+        
 }

@@ -7,15 +7,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapController : MonoBehaviour 
+// Dependency class to manage the portals:
+[RequireComponent(typeof(PortalController))]
+    
+public class MapController : Controller 
 {
     [SerializeField]
     string startingMapName;
 
     [SerializeField]
-    bool createMapOnStart;
+    bool createMapOnStart = true;
 
     CameraController cam;
+    PortalController portals;
 
     MapDescriptor currentMap;
     Dictionary<string, MapDescriptor> mapBuffer = new Dictionary<string, MapDescriptor>();
@@ -23,6 +27,12 @@ public class MapController : MonoBehaviour
     public MapDescriptor PeekMap()
     {
         return this.currentMap;
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        this.portals = GetComponent<PortalController>();
     }
 
     void Start() 
@@ -50,10 +60,15 @@ public class MapController : MonoBehaviour
         }
     }
 
+    public void HandlePortalEnter(MapObjectBehaviour target, MapObjectBehaviour portal)
+    {
+        portals.HandlePortalEnter(target, portal);    
+    }
+
     void createMap(MapDescriptor map)
     {
         setMap(map);
-        new MapLoader().CreateWorld(map, cam, transform);
+        new MapLoader().CreateWorld(map, this, portals, cam, transform);
     }
 
     void setMap(MapDescriptor map)
@@ -90,6 +105,7 @@ public class MapController : MonoBehaviour
 
     void teardownMap()
     {
+        portals.ClearActivePortals();
         for(int i = 0; i < transform.childCount; i++)
         {
             Destroy(transform.GetChild(i).gameObject);
